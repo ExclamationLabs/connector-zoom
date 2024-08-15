@@ -29,6 +29,7 @@ public enum ZoomUserAttribute {
   PHONE_COUNTRY,
   STATUS,
   __ENABLE__,
+  __NAME__,
   TYPE,
   CREATED_AT,
   LAST_LOGIN_TIME,

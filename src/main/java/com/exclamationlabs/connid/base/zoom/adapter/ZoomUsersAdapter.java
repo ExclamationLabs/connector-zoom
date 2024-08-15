@@ -91,7 +91,7 @@ public class ZoomUsersAdapter extends BaseAdapter<ZoomUser, ZoomConfiguration> {
     user.setLastName(
         AdapterValueTypeConverter.getSingleAttributeValue(String.class, attributes, LAST_NAME));
     user.setEmail(
-        AdapterValueTypeConverter.getSingleAttributeValue(String.class, attributes, EMAIL));
+        AdapterValueTypeConverter.getSingleAttributeValue(String.class, attributes, __NAME__));
     user.setTimezone(
         AdapterValueTypeConverter.getSingleAttributeValue(String.class, attributes, TIME_ZONE));
 
