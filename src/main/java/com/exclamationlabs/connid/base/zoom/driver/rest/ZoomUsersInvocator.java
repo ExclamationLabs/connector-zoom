@@ -105,6 +105,22 @@ public class ZoomUsersInvocator implements DriverInvocator<ZoomDriver, ZoomUser>
     // If this Update request was an attempt to deactivate a user, do not invoke any other update
     // attempts
     if (!deactivateOnly) {
+      if (!StringUtils.isBlank(user.getEmail())) {
+        RestRequest emailReq =
+            new RestRequest.Builder<>(Void.class)
+                .withPut()
+                .withRequestBody(String.format("{\"email\": \"%s\"}", user.getEmail()))
+                .withRequestUri("/users/" + userId + "/email")
+                .build();
+        RestResponseData<Void> response = driver.executeRequest(emailReq);
+
+        if (response.getResponseStatusCode() != 204) {
+          Logger.warn(
+              this,
+              String.format(
+                  "Status %d: Cannot update user email %s", response.getResponseStatusCode(), userId));
+        }
+      }
 
       RestRequest req =
           new RestRequest.Builder<>(Void.class)
