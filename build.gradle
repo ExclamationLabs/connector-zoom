@@ -66,8 +66,8 @@ dependencies {
     // Required for MidPoint runtime
     runtimeOnly 'com.evolveum.polygon:connector-common:1.5.0.0'
 
-    implementation ("com.exclamationlabs.connid:connector-base:${base_connector_version}")
-    implementation ("com.exclamationlabs.connid:connector-base:${base_connector_version}") {
+    implementation ("com.exclamationlabs.connid:connector-base:${base_connector_version}-+")
+    implementation ("com.exclamationlabs.connid:connector-base:${base_connector_version}-+") {
         capabilities {
             requireCapability('com.exclamationlabs.connid:connector-base-http')
         }
