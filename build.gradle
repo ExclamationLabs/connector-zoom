@@ -15,12 +15,13 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id "com.google.cloud.artifactregistry.gradle-plugin" version "${google_artifact_plugin_version}"
-    id 'com.github.sherter.google-java-format' version '0.9'
+    id "com.diffplug.spotless" version "6.25.0"
     id 'idea'
 }
 
 repositories {
     mavenCentral()
+    // mavenLocal()
     maven {
         url "https://nexus.evolveum.com/nexus/content/repositories/releases/"
     }
@@ -29,8 +30,16 @@ repositories {
     }
 }
 
-googleJavaFormat {
-    exclude 'generatedConfig/**/*.java'
+spotless {
+    java {
+        googleJavaFormat('1.17.0')
+        targetExclude(
+            [
+                'generatedConfig/com/exclamationlabs/connid/base/zoom/configuration/ZoomConfiguration.java',
+                'com/exclamationlabs/connid/base/zoom/configuration/ZoomConfiguration.java'
+            ]
+        )
+    }
 }
 
 idea {
@@ -55,16 +64,14 @@ def versionNumber = "${project_version}"
 dependencies {
 
     // Required for MidPoint runtime
-    runtimeOnly 'org.codehaus.groovy:groovy:2.5.21'
     runtimeOnly 'com.evolveum.polygon:connector-common:1.5.0.0'
 
-    // HTTP/RESTful support
-    implementation 'com.google.code.gson:gson:2.10.1'
-    implementation 'org.apache.httpcomponents:httpclient:4.5.14'
-
-    implementation 'commons-codec:commons-codec:1.15'
-
-    implementation "com.exclamationlabs.connid:connector-base:${base_connector_version}-+"
+    implementation ("com.exclamationlabs.connid:connector-base:${base_connector_version}")
+    implementation ("com.exclamationlabs.connid:connector-base:${base_connector_version}") {
+        capabilities {
+            requireCapability('com.exclamationlabs.connid:connector-base-http')
+        }
+    }
 
     testImplementation "com.exclamationlabs.connid:connector-base-test-support:${test_connector_version}-+"
 

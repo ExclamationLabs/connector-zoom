@@ -246,6 +246,7 @@ public class ZoomUsersAdapter extends BaseAdapter<ZoomUser, ZoomConfiguration> {
 
     return attributes;
   }
+
   /**
    * This utility method can be used within adapter constructModel() method in order to construct a
    * list of identifiers for assignment to another object type

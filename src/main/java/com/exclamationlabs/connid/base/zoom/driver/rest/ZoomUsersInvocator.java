@@ -336,6 +336,7 @@ public class ZoomUsersInvocator implements DriverInvocator<ZoomDriver, ZoomUser>
       throws ConnectorException {
     return getOneByName(driver, userName);
   }
+
   /**
    * Get the phone user profile
    *

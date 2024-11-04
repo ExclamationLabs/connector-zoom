@@ -21,7 +21,7 @@ import com.exclamationlabs.connid.base.connector.logging.Logger;
 import com.exclamationlabs.connid.base.zoom.model.response.fault.ErrorResponse;
 import com.google.gson.GsonBuilder;
 import java.io.IOException;
-import org.apache.commons.codec.Charsets;
+import java.nio.charset.StandardCharsets;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -42,7 +42,7 @@ public class ZoomFaultProcessor implements RestFaultProcessor {
   public void process(HttpResponse httpResponse, GsonBuilder gsonBuilder) {
     String rawResponse;
     try {
-      rawResponse = EntityUtils.toString(httpResponse.getEntity(), Charsets.UTF_8);
+      rawResponse = EntityUtils.toString(httpResponse.getEntity(), StandardCharsets.UTF_8);
       Logger.info(this, String.format("Raw Fault response %s", rawResponse));
 
       Header responseType = httpResponse.getFirstHeader("Content-Type");
