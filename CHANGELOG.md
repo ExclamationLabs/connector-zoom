@@ -1,6 +1,7 @@
 # connector-zoom
 
 ## Change Log
++ **4.3.0** - Making compatible with Spring updates in MP 4.8 (11/04/2024) 
 + **4.2.3** - Updated Object Class names from ACCOUNT to ZoomUser and GROUP to ZoomGroup
 + **4.2.2** - Update Connector-Base Version, GAR Updates, and Update to Java 11 FIN-12386 (9/3/2024)
 + **4.2.1** - Added Email Address Change Support

@@ -300,7 +300,9 @@ public class ZoomUsersInvocator implements DriverInvocator<ZoomDriver, ZoomUser>
     RestResponseData<ZoomUser> response = driver.executeRequest(req);
     if (response.getResponseStatusCode() == 200) {
       user = response.getResponseObject();
-      getPhoneInfo(driver, user);
+      if (user.getFeature() != null && user.getFeature().getZoomPhone()) {
+        getPhoneInfo(driver, user);
+      }
     }
 
     return user;
@@ -326,7 +328,9 @@ public class ZoomUsersInvocator implements DriverInvocator<ZoomDriver, ZoomUser>
     user = response.getResponseObject();
     if (response.getResponseStatusCode() == 200) {
       user = response.getResponseObject();
-      getPhoneInfo(driver, user);
+      if (user.getFeature() != null && user.getFeature().getZoomPhone()) {
+        getPhoneInfo(driver, user);
+      }
     }
     return user;
   }
@@ -336,6 +340,7 @@ public class ZoomUsersInvocator implements DriverInvocator<ZoomDriver, ZoomUser>
       throws ConnectorException {
     return getOneByName(driver, userName);
   }
+
   /**
    * Get the phone user profile
    *
