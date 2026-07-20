@@ -57,7 +57,7 @@ public class ZoomUsersAdapter extends BaseAdapter<ZoomUser, ZoomConfiguration> {
     result.add(new ConnectorAttribute(CREATED_AT.name(), STRING, NOT_UPDATEABLE));
     result.add(new ConnectorAttribute(LAST_LOGIN_TIME.name(), STRING, NOT_UPDATEABLE));
     result.add(new ConnectorAttribute(VERIFIED.name(), STRING, NOT_UPDATEABLE));
-    result.add(new ConnectorAttribute(PERSONAL_MEETING_ID.name(), LONG, NOT_UPDATEABLE));
+    result.add(new ConnectorAttribute(PERSONAL_MEETING_ID.name(), STRING, NOT_UPDATEABLE));
 
     result.add(new ConnectorAttribute(GROUP_IDS.name(), ASSIGNMENT_IDENTIFIER, MULTIVALUED));
 
@@ -125,9 +125,12 @@ public class ZoomUsersAdapter extends BaseAdapter<ZoomUser, ZoomConfiguration> {
             String.class, attributes, LAST_LOGIN_TIME));
     user.setVerified(
         AdapterValueTypeConverter.getSingleAttributeValue(String.class, attributes, VERIFIED));
-    user.setPersonalMeetingId(
+    String personalMeetingId =
         AdapterValueTypeConverter.getSingleAttributeValue(
-            Long.class, attributes, PERSONAL_MEETING_ID));
+            String.class, attributes, PERSONAL_MEETING_ID);
+    if (StringUtils.isNotBlank(personalMeetingId)) {
+      user.setPersonalMeetingId(Long.valueOf(personalMeetingId));
+    }
 
     user.setGroupsToRemove(readAssignments(multiValueRemoved, GROUP_IDS));
     user.setGroupsToAdd(readAssignments(multiValueAdded, GROUP_IDS));
@@ -204,7 +207,12 @@ public class ZoomUsersAdapter extends BaseAdapter<ZoomUser, ZoomConfiguration> {
     attributes.add(AttributeBuilder.build(CREATED_AT.name(), user.getCreatedAt()));
     attributes.add(AttributeBuilder.build(LAST_LOGIN_TIME.name(), user.getLastLoginTime()));
     attributes.add(AttributeBuilder.build(VERIFIED.name(), user.getVerified()));
-    attributes.add(AttributeBuilder.build(PERSONAL_MEETING_ID.name(), user.getPersonalMeetingId()));
+    attributes.add(
+        AttributeBuilder.build(
+            PERSONAL_MEETING_ID.name(),
+            user.getPersonalMeetingId() == null
+                ? null
+                : String.valueOf(user.getPersonalMeetingId())));
     attributes.add(AttributeBuilder.build(GROUP_IDS.name(), user.getGroupIds()));
     attributes.add(AttributeBuilder.build(STATUS.name(), user.getStatus()));
     boolean administrativeStatus = (StringUtils.equalsIgnoreCase(user.getStatus(), "active"));
